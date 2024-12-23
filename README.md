@@ -107,19 +107,7 @@ Este projeto atende aos seguintes requisitos especificados na proposta:
 
 ---
 
-### **3️⃣ Configurar Banco de Dados (RDS MySQL)**
-1. Navegue até o serviço RDS e escolha **Criar Banco de Dados**.
-2. Configure:
-   - Tipo: **MySQL**.
-   - Modelo: **Nível Gratuito** ou conforme necessidade.
-   - Identificadores: Nome do DB, usuário e senha.
-   - Instância: **db.t3.micro** (ou maior, dependendo da carga).
-   - Acesso: Desabilitar **Acesso Público** e usar o SG específico.
-3. Após criar, anote o **Endpoint do Banco de Dados**.
-
----
-
-### **4️⃣ Configurar EFS**
+### **3️⃣ Configurar EFS**
 1. Navegue até o serviço EFS e crie um sistema de arquivos.
 Configure:
 2. Use o grupo de segurança do EFS para controlar o acesso.
@@ -130,6 +118,17 @@ Monte o EFS nas instâncias EC2 usando:
 3. Coloque a montagem no seu script ```use_date.sh```.
 4. Certifique-se de que o EFS está na mesma região da sua instância EC2
    
+---
+### **4️⃣ Configurar Banco de Dados (RDS MySQL)**
+1. Navegue até o serviço RDS e escolha **Criar Banco de Dados**.
+2. Configure:
+   - Tipo: **MySQL**.
+   - Modelo: **Nível Gratuito** ou conforme necessidade.
+   - Identificadores: Nome do DB, usuário e senha.
+   - Instância: **db.t3.micro** (ou maior, dependendo da carga).
+   - Acesso: Desabilitar **Acesso Público** e usar o SG específico.
+3. Após criar, anote o **Endpoint do Banco de Dados**.
+
 ---
 
 ### **5️⃣ Adicionar Bastion Host**
@@ -318,6 +317,6 @@ Adicione as seguintes configurações:
 ---
 
 ### 📚 **Referências e Materiais Adicionais** 
-* [Documentação do WordPress](https://wordpress.org/documentation/) 
+* [Documentação do WordPress](https://wordpress.org/documentation/)
 * [Docker Hub - WordPress Image](https://hub.docker.com/_/wordpress) 
-* [Documentação AWS](https://docs.aws.amazon.com/)# wordpress-docker
+* [Documentação AWS](https://docs.aws.amazon.com/)
