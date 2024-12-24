@@ -91,6 +91,8 @@ Este projeto atende aos seguintes requisitos especificados na proposta:
    - Um **Internet Gateway**.
 3. Salve as configurações.
 
+![Texto Alternativo](./vpc.png)
+
 ---
 
 ### **2️⃣ Configurar Grupos de Segurança (SGs)**
@@ -105,6 +107,8 @@ Este projeto atende aos seguintes requisitos especificados na proposta:
 | EFS          | 2049  | NFS       | Grupo de Segurança da EC2     |
 | Load Balancer| 80    | HTTP      | 0.0.0.0/0                     |
 
+![Texto Alternativo](./(SGs).png)
+
 ---
 
 ### **3️⃣ Configurar EFS**
@@ -117,7 +121,9 @@ Monte o EFS nas instâncias EC2 usando:
     sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport fs-XXXXX.efs.us-east-1.amazonaws.com:/ /mnt/efs
 3. Coloque a montagem no seu script ```use_date.sh```.
 4. Certifique-se de que o EFS está na mesma região da sua instância EC2
-   
+
+![Texto Alternativo](./efs.png)
+
 ---
 ### **4️⃣ Configurar Banco de Dados (RDS MySQL)**
 1. Navegue até o serviço RDS e escolha **Criar Banco de Dados**.
@@ -128,6 +134,8 @@ Monte o EFS nas instâncias EC2 usando:
    - Instância: **db.t3.micro** (ou maior, dependendo da carga).
    - Acesso: Desabilitar **Acesso Público** e usar o SG específico.
 3. Após criar, anote o **Endpoint do Banco de Dados**.
+
+![Texto Alternativo](./rds.png)
 
 ---
 
@@ -187,6 +195,9 @@ Adicione as seguintes configurações:
 ---
 
 ### **6️⃣ Criar Instância EC2 e Configurar Inicialização**
+
+![alt text](instancia.png)
+
 1. Escolha o AMI: **Amazon Linux 2023**.
 2. Configure:
    - Tipo: **t2.micro** (ou maior).
@@ -282,38 +293,9 @@ Adicione as seguintes configurações:
    * Após completar a instalação, acesse a tela de login do WordPress via ```http://<seu-load-balancer-endereco>/wp-login.php```.
    * Verifique se a tela de login é exibida e que você pode acessar o painel de administração do WordPress.
 
-5. **Acessar Instâncias Privadas Usando Bastion Host**
-* Configure o arquivo ```~/.ssh/config``` no seu computador local usando ```nano```   
-    ```bash
-    nano ~/.ssh/config
 
-* Adicione as seguintes configurações:
+![alt text](resultado.png)
 
-       Host bastion-host
-          HostName <BASTION_HOST_PUBLIC_IP>
-          User ec2-user
-          Port 22
-          IdentityFile ~/.ssh/seu-arquivo-chaves.pem
-          IdentitiesOnly yes
-       Host private-ec2
-          HostName <PRIVATE_EC2_PRIVATE_IP>
-          User ec2-user
-          Port 22
-          IdentityFile ~/.ssh/seu-arquivo-chaves.pem
-          IdentitiesOnly yes
-          ProxyJump bastion-host
-
-* Salve e feche o arquivo no ```nano```
-     * Pressione CTRL + O para salvar o arquivo.
-     * Pressione ENTER para confirmar.
-     * Pressione CTRL + X para sair do nano.
-
-* Conecte-se ao Bastion Host:
-        ssh bastion-host
-
-* A partir do Bastion Host, conecte-se à instância privada:
-        ssh private-ec2
-        
 ---
 
 ### 📚 **Referências e Materiais Adicionais** 
