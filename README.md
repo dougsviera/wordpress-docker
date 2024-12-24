@@ -257,9 +257,11 @@ Adicione as seguintes configurações:
 ### **7️⃣ Configurar Load Balancer (ELB)**
 1. Acesse o serviço ELB e crie um Load Balancer:
     * Tipo: Application Load Balancer (Internet-facing).
-    * No Ping path acrescentar ```/wp-admin/install.php```.
+    * No caminho do pring acrescentar ```/wp-admin/install.php```.
     * Configure listeners para redirecionar tráfego HTTP (porta * 80).
     * Use o SG do Load Balancer e registre as instâncias EC2.
+
+![Texto Alternativo](./elb.png)
 
 ---
 
@@ -269,6 +271,8 @@ Adicione as seguintes configurações:
     * Max: 6 instâncias (ou conforme necessário).
     * Configuração de verificação de integridade baseada no ELB.
 2. Adicione políticas de escalação com base em métricas como uso de CPU.
+
+![Texto Alternativo](./auto.scale.png)
 
 ---
    
