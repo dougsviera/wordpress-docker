@@ -9,6 +9,7 @@ A arquitetura implementa as melhores práticas, incluindo o uso de:
 - **Elastic Load Balancer (ELB)** para gerenciar o tráfego e garantir alta disponibilidade.
 - **Auto Scaling** para ajuste dinâmico de recursos.
 - **Bastion Host** para acesso seguro às instâncias privadas.
+- **O arquivo .service** automatiza a montagem do EFS e a inicialização do Docker Compose, garantindo que os contêineres da aplicação sejam executados automaticamente após reinicializações, mantendo a alta disponibilidade e integração com os recursos da AWS.
 
 Atende também aos requisitos de instalação e configuração do Docker ou Containerd no host EC2, deploy da aplicação WordPress com contêineres e configuração dos serviços da AWS como EFS e Load Balancer.
 
