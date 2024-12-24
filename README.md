@@ -244,7 +244,7 @@ WantedBy=multi-user.target
 
 **7. Procedimento de Configuração**
 
-   * Criar o Arquivo do Serviço:**
+   * Criar o Arquivo do Serviço:
    ```bash
    sudo nano /etc/systemd/system/wordpress-docker.service
    ```
@@ -264,11 +264,11 @@ WantedBy=multi-user.target
    ```
 
    * Validar a Configuração:
-   - Verifique o status do serviço:
+      - Verifique o status do serviço:
      ```bash
      sudo systemctl status wordpress-docker.service
      ```
-   - Reinicie a instância e verifique se o serviço está funcionando corretamente:
+      - Reinicie a instância e verifique se o serviço está funcionando corretamente:
      ```bash
      sudo reboot
      ```
