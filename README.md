@@ -22,6 +22,7 @@ Atende também aos requisitos de instalação e configuração do Docker ou Cont
 - **Automação com script `user_data.sh`** para configurar e iniciar as instâncias EC2 automaticamente.
 - **Arquitetura modular e reutilizável**, ideal para projetos empresariais e educacionais.
 - **Escalabilidade** e **alta disponibilidade** utilizando AWS.
+- **Automação** do gerenciamento de contêineres e serviços essenciais com **```arquivos .service```**, garantindo operação contínua e resiliente após reinicializações.
 
 ---
 
