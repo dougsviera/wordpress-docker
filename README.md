@@ -50,6 +50,10 @@ Atende também aos requisitos de instalação e configuração do Docker ou Cont
 - **Função**: Ajustar automaticamente o número de instâncias EC2 conforme a demanda.
 - **Benefícios**: Otimização de custos e alta disponibilidade.
 
+### 🔧 **Arquivo .service**
+- **Função**: O arquivo .service automatiza a montagem do EFS e a inicialização do Docker Compose após a reinicialização da instância EC2.
+- **Benefícios**: Garante alta disponibilidade e resiliência operacional da aplicação WordPress, eliminando a necessidade de intervenções manuais.
+
 ---
 
 ## 🚨 Requisitos da Proposta
@@ -191,6 +195,102 @@ Adicione as seguintes configurações:
 * A partir do Bastion Host, conecte-se à instância privada:
     ```bash
     ssh private-ec2
+
+**6. Arquivo de Serviço no Linux para Automação do Docker**
+
+Este arquivo `.service` permite que os contêineres Docker sejam iniciados automaticamente após a reinicialização da instância Linux na AWS EC2. O serviço utiliza o `docker-compose` para gerenciar os contêineres da aplicação WordPress descrita anteriormente.
+
+
+1. Conteúdo do Arquivo de Serviço
+
+   Crie o arquivo do serviço no diretório `/etc/systemd/system/` com o nome `wordpress-docker.service` e adicione o seguinte conteúdo:
+
+```ini
+[Unit]
+Description=Start WordPress Docker Containers
+After=network.target docker.service
+Requires=docker.service
+
+[Service]
+Type=simple
+Restart=always
+WorkingDirectory=/app
+ExecStart=/usr/local/bin/docker-compose up -d
+ExecStop=/usr/local/bin/docker-compose down
+TimeoutStartSec=0
+
+[Install]
+WantedBy=multi-user.target
+```
+
+2. Explicação dos Parâmetros
+
+- **[Unit]:**
+  - `After=network.target docker.service`: O serviço será iniciado somente após a rede e o Docker estarem disponíveis.
+  - `Requires=docker.service`: Garante que o serviço depende do Docker.
+
+- **[Service]:**
+  - `Type=simple`: Define que o serviço será gerenciado como um processo simples.
+  - `Restart=always`: Reinicia o serviço automaticamente em caso de falha.
+  - `WorkingDirectory=/app`: Diretório onde está localizado o arquivo `docker-compose.yml`.
+  - `ExecStart`: Comando para iniciar os contêineres.
+  - `ExecStop`: Comando para parar os contêineres.
+  - `TimeoutStartSec=0`: Remove o tempo limite para o início do serviço.
+
+- **[Install]:**
+  - `WantedBy=multi-user.target`: Garante que o serviço será ativado para todos os usuários.
+
+
+**7. Procedimento de Configuração**
+
+   * Criar o Arquivo do Serviço:**
+   ```bash
+   sudo nano /etc/systemd/system/wordpress-docker.service
+   ```
+   Cole o conteúdo acima e salve o arquivo.
+
+   * Definir Permissões Adequadas:**
+   ```bash
+   sudo chmod 644 /etc/systemd/system/wordpress-docker.service
+   sudo chown -R $USER:$USER /app
+   ```
+
+   * Recarregar e Habilitar o Serviço:**
+   ```bash
+   sudo systemctl daemon-reload
+   sudo systemctl enable wordpress-docker.service
+   sudo systemctl start wordpress-docker.service
+   ```
+
+   * Validar a Configuração:
+   - Verifique o status do serviço:
+     ```bash
+     sudo systemctl status wordpress-docker.service
+     ```
+   - Reinicie a instância e verifique se o serviço está funcionando corretamente:
+     ```bash
+     sudo reboot
+     ```
+
+**8. Logs e Debugging**
+
+Se o serviço não iniciar corretamente, use os comandos abaixo para diagnóstico:
+
+- **Verificar Logs do Serviço:**
+  ```bash
+  sudo journalctl -u wordpress-docker.service
+  ```
+- **Editar o Arquivo do Serviço:**
+  ```bash
+  sudo nano /etc/systemd/system/wordpress-docker.service
+  ```
+  Após ajustes, recarregue o daemon:
+  ```bash
+  sudo systemctl daemon-reload
+  sudo systemctl restart wordpress-docker.service
+  ```
+
+Com esta configuração, a aplicação WordPress será gerenciada automaticamente pelo `systemd`, garantindo que ela seja iniciada e gerenciada mesmo após reinicializações ou falhas no sistema.
 
 ---
 
