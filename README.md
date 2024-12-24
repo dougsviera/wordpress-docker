@@ -105,9 +105,9 @@ Este projeto atende aos seguintes requisitos especificados na proposta:
 | Serviço      | Porta | Protocolo | Origem                        |
 |--------------|-------|-----------|-------------------------------|
 | Bastion Host | 22    | SSH       | Seu IP público (IP confiável) |
-| EC2          | 80    | HTTP      | Grupo do Load Balancer        |
-| EC2          | 443   | HTTPS     | Grupo do Load Balancer        |
-| EC2          | 22    | SSH       | 0.0.0.0/0 (ou IP confiável)   |
+| EC2  PRIVATE | 80    | HTTP      | Grupo do Load Balancer        |
+| EC2  PRIVATE | 443   | HTTPS     | Grupo do Load Balancer        |
+| EC2  PRIVATE | 22    | SSH       | 0.0.0.0/0 (ou IP confiável)   |
 | RDS MySQL    | 3306  | MySQL     | Grupo de Segurança da EC2     |
 | EFS          | 2049  | NFS       | Grupo de Segurança da EC2     |
 | Load Balancer| 80    | HTTP      | 0.0.0.0/0                     |
