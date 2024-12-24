@@ -251,13 +251,13 @@ WantedBy=multi-user.target
    ```
    Cole o conteúdo acima e salve o arquivo.
 
-   * Definir Permissões Adequadas:**
+   * Definir Permissões Adequadas:
    ```bash
    sudo chmod 644 /etc/systemd/system/wordpress-docker.service
    sudo chown -R $USER:$USER /app
    ```
 
-   * Recarregar e Habilitar o Serviço:**
+   * Recarregar e Habilitar o Serviço:
    ```bash
    sudo systemctl daemon-reload
    sudo systemctl enable wordpress-docker.service
