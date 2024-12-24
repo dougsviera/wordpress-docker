@@ -291,6 +291,14 @@ Adicione as seguintes configurações:
       sudo systemctl daemon-reload
       sudo systemctl enable wordpress-docker.service
       sudo systemctl start wordpress-docker.service
+
+* Em resumo, as substituições necessárias no seu script são principalmente no bloco de configuração do docker-compose.yml e no comando de montagem do EFS. Você precisará substituir os seguintes valores:
+   * WORDPRESS_DB_HOST: Substitua pelo endereço do seu banco de dados (por exemplo, um RDS ou outro servidor MySQL).
+   * WORDPRESS_DB_USER: Substitua pelo seu nome de usuário do banco de dados.
+   * WORDPRESS_DB_PASSWORD: Substitua pela senha do banco de dados.
+   * WORDPRESS_DB_NAME: Substitua pelo nome do banco de dados.
+   * EFS MOUNT POINT: Se você não estiver usando o Amazon EFS ou quiser usar um caminho diferente, altere o valor de /mnt/efs.
+Essas alterações garantirão que o seu script esteja configurado corretamente para o seu ambiente e funcione como esperado
             
 --- 
 
