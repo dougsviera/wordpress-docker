@@ -256,7 +256,33 @@ Adicione as seguintes configurações:
       
       docker-compose -f /app/compose.yml up -d
 
-
+      # Criar o arquivo de serviço systemd para o docker-compose
+      sudo tee /etc/systemd/system/wordpress-docker.service > /dev/null <<EOF
+      [Unit]
+      Description=Start WordPress Docker Containers
+      After=network.target docker.service
+      Requires=docker.service
+      
+      [Service]
+      Type=simple
+      Restart=always
+      WorkingDirectory=/app
+      ExecStart=/usr/local/bin/docker-compose up -d
+      ExecStop=/usr/local/bin/docker-compose down
+      TimeoutStartSec=0
+      
+      [Install]
+      WantedBy=multi-user.target
+      EOF
+      
+      # Definir permissões adequadas para o arquivo de serviço
+      sudo chmod 644 /etc/systemd/system/wordpress-docker.service
+      
+      # Recarregar o daemon do systemd e habilitar o serviço
+      sudo systemctl daemon-reload
+      sudo systemctl enable wordpress-docker.service
+      sudo systemctl start wordpress-docker.service
+      
 --- 
 
 ### **7️⃣ Configurar Load Balancer (ELB)**
